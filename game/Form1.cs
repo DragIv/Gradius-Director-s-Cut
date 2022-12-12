@@ -57,7 +57,6 @@ namespace game
             {
                 stars.Add(new Star(new Point(rand.Next(field.Width), rand.Next(field.Height)), new Size(3, 3), rand.Next(3, 8)));
             }
-            audio_player.Play(rand.Next(audio_player.music_num.Count));
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -70,6 +69,9 @@ namespace game
                 gameObjects.Add(player);
                 hud = new Hud();
                 current_game_state = GameStates.Playing;
+                timerSpawnEnemy.Enabled = true;
+                audio_player.Stop();
+                audio_player.Play(rand.Next(audio_player.music_num.Count));
             }
             if (player != null)
             {
@@ -201,10 +203,15 @@ namespace game
             }
             if (stars.Count < maximum_stars) stars.Add(new Star(new Point(field.Width, rand.Next(field.Height)), new Size(3, 3), rand.Next(3, 8)));
 
-            if (DateTime.Now - timer > TimeSpan.FromSeconds(300))
+            if (DateTime.Now - timer > TimeSpan.FromSeconds(10) && current_game_state == GameStates.Playing)
             {
                 current_game_state = GameStates.Win;
                 timerSpawnEnemy.Enabled = false;
+            }
+
+            if (!audio_player.Is_music_playing() && current_game_state != GameStates.Lose)
+            {
+                audio_player.Play(rand.Next(audio_player.music_num.Count));
             }
         }
 
@@ -268,7 +275,7 @@ namespace game
             {
                 for (int i = 0; i < rand.Next(3, 6); i++)
                 {
-                    gameObjects.Add(new Enemy(new PointF(panel1.Width, c_Y), new Size(56, 64), 6, 100, "Jumpy", false));
+                    gameObjects.Add(new Enemy(new PointF(panel1.Width, c_Y), new Size(56, 64), 6, 100, "Jumpy"));
                     await Task.Delay(600);
                     if (token.IsCancellationRequested) return;
                 }
