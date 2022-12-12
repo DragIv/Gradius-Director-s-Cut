@@ -37,6 +37,17 @@ namespace game
         {
             Play(music_num[i], loop);
         }
+        public bool Is_music_playing()
+        {
+            foreach (var num in music_num)
+            {
+                if (sounds[num.Value].outputDevice.PlaybackState == PlaybackState.Playing)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public void Stop()
         {
             foreach (var sound in sounds)

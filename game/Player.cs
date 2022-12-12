@@ -106,6 +106,8 @@ namespace game
                 {
                     is_alive = false;
                     Form1.current_game_state = Form1.GameStates.Lose;
+                    Form1.audio_player.Stop();
+                    Form1.audio_player.Play("gameover");
                 }
             }
         }

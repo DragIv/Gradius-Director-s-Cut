@@ -78,6 +78,11 @@ namespace game
                         loc = new PointF(location.X + vector_speed.X, location.Y - vector_speed.Y);
                         break;
                     default:
+                        if (!direction_buttons[Directions.Left])
+                        {
+                            direction_buttons[Directions.Left] = true;
+                            ChangeDirection();
+                        }
                         loc = new PointF(location.X + vector_speed.X, location.Y - vector_speed.Y);
                         break;
                 }
