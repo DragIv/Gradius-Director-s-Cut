@@ -1,0 +1,2 @@
+Forward 4
+Explosion 3

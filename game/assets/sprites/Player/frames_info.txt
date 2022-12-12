@@ -1,0 +1,4 @@
+Forward 2
+Upwards 2
+Downwards 2
+Explosion 4
